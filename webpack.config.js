@@ -21,4 +21,71 @@ module.exports = {
     port: 8080,
     open: true,
   },
+  module: {
+    rules: [
+      {
+        test: /\.css$/, // 匹配所有的css文件
+        use: ['style-loader', 'css-loader'],
+      },
+      {
+        test: /\.less$/, // 匹配所有的css文件
+        use: ['style-loader', 'css-loader', 'less-loader'],
+      },
+      //   {
+      //     // webpack 4
+      //     test: /\.(png|jpg|gif|jpeg)$/i,
+      //     use: [
+      //       {
+      //         loader: 'url-loader',
+      //         options: {
+      //           limit: 8 * 1024,
+      //         },
+      //       },
+      //     ],
+      //   },
+      {
+        // webpack 5
+        test: /\.(png|jpg|gif|jpeg)$/i,
+        type: 'asset',
+        // type: 'asset/inline', // base64
+        // type: 'asset/resource', // file
+        generator: {
+          filename: '[hash:6][ext]',
+        },
+      },
+
+      //   {
+      //     // webpack 5 iconfont
+      //     test: /\.(eot|svg|ttf|woff|woff2)$/,
+      //     type: 'asset/resource',
+      //     generator: {
+      //       filename: 'font-[name].[hash:6][ext]',
+      //     },
+      //   },
+      {
+        // webpack4 iconfont
+        test: /\.(eot|svg|ttf|woff|woff2)$/,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 1 * 1024,
+              name: '[name].[ext]',
+              outputPath: 'fonts/',
+            },
+          },
+        ],
+      },
+      {
+        test: /\.js$/,
+        exclude: /(node_modules)/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env'],
+          },
+        },
+      },
+    ],
+  },
 }
