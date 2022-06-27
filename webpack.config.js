@@ -1,6 +1,7 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const { VueLoaderPlugin } = require('vue-loader')
 
 module.exports = {
   mode: 'development',
@@ -16,6 +17,7 @@ module.exports = {
       filename: 'index.html', // 生成文件的名称
     }),
     new CleanWebpackPlugin(),
+    new VueLoaderPlugin(),
   ],
   devServer: {
     port: 8080,
@@ -23,6 +25,10 @@ module.exports = {
   },
   module: {
     rules: [
+      {
+        test: /\.vue$/,
+        loader: 'vue-loader',
+      },
       {
         test: /\.css$/, // 匹配所有的css文件
         use: ['style-loader', 'css-loader'],
@@ -69,9 +75,9 @@ module.exports = {
           {
             loader: 'url-loader',
             options: {
-              limit: 1 * 1024,
+              limit: 2 * 1024,
               name: '[name].[ext]',
-              outputPath: 'fonts/',
+              outputPath: 'lib/images/',
             },
           },
         ],

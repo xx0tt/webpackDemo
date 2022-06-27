@@ -29,3 +29,5 @@ console.log(App.a)
 ;(() => {
   console.log('===========----=========')
 })()
+
+import Appp from './app.vue'
